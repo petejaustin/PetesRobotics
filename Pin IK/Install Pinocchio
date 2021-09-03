@@ -1,0 +1,29 @@
+1) sudo apt install -qqy lsb-release gnupg2 curl
+
+2) Add robotpkg as a source repository to apt:
+   echo "deb [arch=amd64] http://robotpkg.openrobots.org/packages/debian/pub $(lsb_release -cs) robotpkg" | sudo tee /etc/apt/sources.list.d/robotpkg.list
+   
+3) Register authentication certificate of robotpkg:
+   curl http://robotpkg.openrobots.org/packages/debian/robotpkg.key | sudo apt-key add -
+
+4) Get package descriptions using 'sudo apt-get update'
+
+5) Install the actual Pinocchio package and its dependencies:
+   sudo apt install -qqy robotpkg-py38-pinocchio
+   
+   NOTE: the 38 in py38 stands for Python version 3.8. This should be set to
+   whatever version of Python your machine is running. You can find what 
+   version of Python you have by typing 'python --version'.
+   
+6) Configure the environment variables. Put the following lines inside the
+   .bashrc file. There will be a picture in the same directory as this guide
+   showing how it should look.
+   
+   export PATH=/opt/openrobots/bin:$PATH
+   export PKG_CONFIG_PATH=/opt/openrobots/lib/pkgconfig:$PKG_CONFIG_PATH
+   export LD_LIBRARY_PATH=/opt/openrobots/lib:$LD_LIBRARY_PATH
+   export PYTHONPATH=/opt/openrobots/lib/python2.7/site-packages:$PYTHONPATH
+   export CMAKE_PREFIX_PATH=/opt/openrobots:$CMAKE_PREFIX_PATH
+   
+   NOTE: On line 4 of the env variables, you'll see python2.7. Change this to
+   whatever version of Python your machine is running.
