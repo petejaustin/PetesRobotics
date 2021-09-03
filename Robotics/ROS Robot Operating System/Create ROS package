@@ -1,0 +1,26 @@
+This set of instructions covers how we can make ROS packages within the ROS
+workspace we made inside another tutorial. If a ROS workspace with sandbox has
+not been made yet, please make that first.
+
+1) Navigate to our sandbox inside ROSworkspace.
+
+2) Make a new package using roscreate-pkg. This takes the following format:
+'roscreate-pkg packageName [depend1] [depend2] [depend3]' etc...
+
+In this tutorial, we will call our package beginner_tutorials, and the 
+dependencies we will use will be std_msgs, rospy, and roscpp. This will be:
+'roscreate-pkg beginner_tutorials std_msgs rospy roscpp'.
+
+3) Inside the package we have made, there will be a manifest.xml document. This
+provides vital metadata for developers to read with respect to the package. It
+contains information such as whom the maintainer is, what license is used, and
+a solid description about the package.
+Note: A rule of thumb if you're not told otherwise is to use BSD as the license.
+
+4) If any changes like this are made to the path, call the 'rospack profile'
+command.
+To ensure that the new directory can now be found, use:
+'rospack find beginner_tutorials'.
+
+Note: These dependencies rospy and roscpp are CLIENT LIBRARIES that ALLOW
+PROGRAMMING LANGUAGES TO COMMUNICATE THROUGH ROS.

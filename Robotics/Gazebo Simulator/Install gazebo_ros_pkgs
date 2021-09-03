@@ -1,0 +1,22 @@
+1) Before trying to install the gazebo_ros_pkgs, please first make sure that you
+   have installed the FULL version of a ROS desktop package.
+
+2) Ensure that you have ROS Gazebo installed. This can be tested by typing in
+   'gazebo' to execute the Gazebo running scripts. If it is not installed,
+   install it now.
+
+3) Install gazebo_ros_pkgs using a command with the following syntax:
+   'sudo apt-get install ros-distro-gazebo-ros-pkgs ros-distro-gazebo-ros-control',
+   where you replace distro with whatever ROS distro you are using (melodic,
+   noetic, etc). 
+
+   Note: Usually having installed the ROS full package, this may come bundled
+   in.
+
+4) Let us now test our ROS integrated Gazebo, and in doing so we will open 3
+   terminals.
+
+   i)   In T1 run roscore
+   ii)  In T2 run 'rosrun gazebo_ros gazebo'
+   iii) To check the ROS connections are fully set up, type 'rostopic list' in
+        T3. In the results, we should see topics that have a gazebo directory.

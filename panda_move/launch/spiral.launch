@@ -1,0 +1,3 @@
+<launch>
+    <node name="hello" pkg="panda_move" type="ik_spiral.py" output="screen"/>
+</launch>

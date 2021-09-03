@@ -1,0 +1,3 @@
+<launch>
+	<node name="spiral_node" pkg="franka_ros_interface" type="ik_spiral.py" output="screen"/>
+</launch>

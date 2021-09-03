@@ -1,0 +1,12 @@
+Applying force to a model in Gazebo involves two direct steps:
+
+1) Get the name of the link(s) you want to manipulate. You can do this using:
+   rostopic echo /gazebo/link_states. This will be the body_name in the 
+   rosservice call
+
+2) We can now apply some force to this link we have found. In this example, we
+   will use panda::panda_link7:
+   
+   rosservice call /gazebo/apply_body_wrench '{"body_name: panda::panda_link7", wrench: { force { x: 0, y: 200, z: 0} }, start_time: 0, duration: -1}
+
+   We can possibly add torque here too, but that is out of scope for the tut

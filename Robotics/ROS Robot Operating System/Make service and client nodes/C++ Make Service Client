@@ -1,0 +1,32 @@
+This tutorial covers how to write a simple service and a client inside C++. 
+
+1) We will create a service named 'add_two_ints_server', which receives two ints
+   as input and returns the sum of them. In a previous service tutorial we will
+   have already made an 'AddTwoInts.srv' file, which we will be calling inside
+   our source code file.
+
+2) Like with the publisher and subscriber tutorial, we will be directly copying
+   and pasting the server and client code into .cpp files that shall be stored
+   in the src directory. Not as many comments are provided this time round,
+   however the code is straightforward enough to gather the intuition simply by
+   reading it.
+
+   Copy the service code into 'add_two_ints_server.cpp',
+   and client code into 'add_two_ints_client.cpp'.
+   Put these in the src directory.
+
+3) Navigate to the CMakeLists.txt file inside our beginner_tutorials directory,
+   and add the following two lines to the bottom:
+   'rosbuild_add_executable(add_two_ints_server src/add_two_ints_server.cpp)'
+   'rosbuild_add_executable(add_two_ints_client src/add_two_ints_client.cpp)'
+
+4) In a terminal once navigated to the beginner_tutorials directory, use the
+   'make' command to build the service and client nodes.
+
+5) Open 3 terminals in order to ready up running the process.
+   i)   In T1, run roscore.
+   ii)  In T2, run 'rosrun beginner_tutorials add_two_ints_server'.
+   iii) In T3, run 'rosrun beginner_tutorials add_two_ints_client x y', where we
+        will REPLACE x and y with any 2 int values we want to add together.
+
+6) To close the processes, ctrl-c the server and then ctrl-c roscore.

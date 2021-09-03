@@ -1,0 +1,31 @@
+This tutorial covers how we can 'roslaunch' to START ROS NODES that have been
+defined inside a LAUNCH FILE.
+
+Syntax:
+roslaunch [package] [filename.launch]
+
+1) Navigate to our beginner_tutorials package using roscd.
+
+2) Make a new directory in this beginner_tutorials directory. We shall call this
+   new directory launch.
+
+3) Let us make a launch file that will make two different turtlesim environments
+   turtlesim1 and turtlesim2. This will be called 'turtlemimic.launch', where 
+   the file extension being launch is very important. I will not write the 
+   source code here, instead I shall include it as a separate file in the same
+   directory as this tutorial.
+
+   The .launch file will have turtlesim2 copy any and all inputs given to 
+   turtlesim1. These launch files are written using XML metadata formatting.
+
+4) Now let us open 3 terminals, with the terminals running the following:
+   T1 - roscore
+   
+   T2 - roslaunch beginner_tutorials turtlemimic.launch
+   Note that for T2 we're NOT using rosrun this time! We launch instead with the
+   launch file.
+
+   T3 - rostopic pub /turtlesim1/turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, -1.8]'
+   Which should "hopefully" tell both turtles to move in a circle! Actually more
+   accurately it tells turtlesim1, but turtlesim2 is mimicking any outputs 
+   coming from turtlesim1 so they shall both be doing the same actions.

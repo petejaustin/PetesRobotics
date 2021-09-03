@@ -1,0 +1,8 @@
+There is an extremely super quick way to navigate to your main workspace, and
+from there to the sandbox, ultimately to any package you like. 
+Note that we must have already made the new workspace and changed the source 
+for this to work (just follow the tutorial on it).
+
+Commands:
+'roscd'
+'cd sandbox'

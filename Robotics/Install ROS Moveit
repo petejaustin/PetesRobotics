@@ -1,0 +1,54 @@
+This instructional guide will show exactly how we can install the ROS Moveit
+packages, as well as all the tutorials that come with it that show how we can
+also edit the instructions via rospy.
+
+DEPENDENCIES:
+1) Ensure ROS is installed, and that the packages are up to date.
+   'rosdep update'
+   'sudo apt update'
+   'sudo apt dist-upgrade'
+
+2) Install catkin, which is used to build workspaces in ROS.
+   'sudo apt install ros-distro-catkin python3-catkin-tools python3-osrf-pycommon'
+
+3) Install wstool (meaning workspace tool)
+   'sudo apt install python3-wstool'
+
+Now the dependencies are covered, we can focus on actually installing MoveIt.
+
+1) Set up a new workspace directory for the MoveIt resources, and use wstool to
+   merge and construct the foundations of the workspace.
+   'mkdir -p ~/moveit_ws/src'
+   'cd ~/moveit_ws/src'
+
+   'wstool init .'
+'wstool merge -t . https://raw.githubusercontent.com/ros-planning/moveit/master/moveit.rosinstall'
+   'wstool remove moveit_tutorials' # this line will be cloned later
+   'wstool update -t .'
+
+2) For our purposes, we will want the MoveIt configuration files especially for
+   the Franka Emika panda arm. Any git clone errors can be safely ignored at
+   this point.
+   'cd ~/moveit_ws/src' if not in the directory
+   'git clone https://github.com/ros-planning/moveit_tutorials.git -b master'
+   'git clone https://github.com/ros-planning/panda_moveit_config.git -b distro-devel'
+
+3) We can now begin making the workspace itself. Start by installing any 
+   dependencies via rosdep that are not already inside the workspace:
+   'cd ~/moveit_ws/src'
+   'rosdep install -y --from-paths . --ignore-src --rosdistro distro'
+
+4) Configure the catkin workspace. Note: do NOT replace the ${ROS_DISTRO} part.
+   Much like the Panda Simulator Catkin build, close as many apps as physically
+   possible before building. This process will take roughly 15 minutes.
+
+   Make sure you are in the '~/moveit_ws' directory,
+   and NOT '~/moveit_ws/src'. Perhaps do 'cd ..' if necessary.
+
+   'cd ~/moveit_ws'
+   'catkin config --extend /opt/ros/${ROS_DISTRO} --cmake-args -DCMAKE_BUILD_TYPE=Release'
+   'catkin build'
+
+5) Source the newly made moveit_ws workspace in the .bashrc file.
+   Note: You can source AS MANY WORKSPACES AS YOU WANT WITHOUT CONSEQUENCE.
+   'source ~/moveit_ws/devel/setup.bash'

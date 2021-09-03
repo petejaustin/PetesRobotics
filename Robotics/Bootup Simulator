@@ -1,0 +1,7 @@
+1) Start the Panda simulator: roslaunch panda_gazebo panda_world.launch
+
+2) If you are using Moveit, boot up moveit server:
+   roslaunch panda_sim_moveit sim_move_group.launch
+
+3) Run Python scripts like you normally would, and roslaunch .launch files from 
+   their workspace directory

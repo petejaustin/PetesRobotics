@@ -1,0 +1,58 @@
+This tutorial will cover how we can use ROS services and parameters via 
+utilising 'rosservice' and 'rosparam'.
+
+Prep:
+Before we get started, ensure 4 terminals are already open.
+T1 should have roscore open
+T2 will run 'rosrun turtlesim turtlesim_node'
+T3 will run 'rosrun turtlesim turtle_teleop_key'
+T4 will be blank and ready for us to run commands on
+
+Services are another way for nodes to communicate rather than topics. A node can
+send a REQUEST, or receive a RESPONSE. 
+
+1) We can get a list of all services that are currently available using 
+   'rosservice list'. These services can be called using the following syntax: 
+   'rosservice call [service] [args].
+
+2) Another command we can use via rosservice is 'rosservice type', which tells
+   us the type that the service is. In this turtlesim node, we can get a service
+   called /clear. If we type in 'rosservice type /clear', 
+   it will return std_srvs/Empty.
+
+   The fact that the type returned is empty tells us that when a service call is
+   made, it takes no arguments at all; it doesn't send data, or receive data.
+
+3) Using information briefly covered in step 1, let us use the command 
+   'rosservice call /clear'. This will clear any kind of trail made by the
+   turtle so far, so make sure to make a few trails using the teleop_key 
+   terminal to get a feel for how it works. In fact, it REFRESHES THE ENTIRE
+   TURTLESIM ENVIRONMENT.
+
+4) To get a more interesting use case for ROSservice type, use the same command
+   on spawn. 'rosservice type /spawn | rossrv show' will return the following:
+   float32 x
+   float32 y
+   float32 theta
+   string name
+   ---
+   string name
+
+   where the first top are arguments we feed in, and below the 3 dashes are what
+   is returned.
+
+5) The name field in spawn is optional, so let us call the command
+   'rosservice call /spawn 2 2 0.2 "", and the service call should automatically
+   name this new turtle 'turtle2' for us.
+
+6) Now let us look at the ROS Parameters server. This will store all parameters
+   needed using YAML. We can Set, Get, Load, Dump, Delete, and List using the
+   rosparam commands.
+
+   If we use 'rosparam list', we will be shown the ROS distro, the host, the 
+   version, and the ID. This should always be shown. Outside of this, we will
+   see the RGB values for the turtlesim background.
+
+7) Let us change the r value of the background_r parameter of turtlesim.
+   'rosparam set /turtlesim/background_r 150' and then
+   'rosservice call /clear' to Refresh the environment.

@@ -1,0 +1,5 @@
+All Panda URDF files are in the following directory:
+workspaceName/src/franka_panda_description/robots
+
+In here there is a file called panda_arm.urdf, as well as plenty of other .xacro
+and .xacro.urdf or .urdf.xacro files.

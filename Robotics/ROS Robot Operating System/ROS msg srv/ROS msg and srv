@@ -1,0 +1,77 @@
+This tutorials shows what we can do with the ROS srv and msg files, as well as
+a general description of what they do.
+
+Msg: msg files are text files that will DESCRIBE FIELDS of an ROS message. we
+use these fields to generate source code for messages in different languages.
+Because of this, these field types must be easily readable for many different
+languages i.e. Java, C++, C, etc...
+
+Srv: Srv stands for SERVICE, NOT SERVER. A service is made from two parts:
+the REQUEST, and the RESPONSE. Like msgs, srvs are their own individual files.
+
+Msg files are stored in the msg directory of a package, and the srv files are
+stored in the srv directory of a package respectively.
+
+Msgs can contain any typical datatypes that you would expect, including vectors.
+Something unique they contain are Headers, which are NOT THE SAME AS C++ 
+HEADERS. These ROS headers contain a Timestamp and Coordinate frame information.
+
+ROS msgs can also HOLD OTHER MSG FILES. Here is a ROS msg example that has a
+header, a string, and two other msgs:
+
+Header header
+string child_frame_id
+geometry_msgs/PoseWithCovariance pose
+geometry_msgs/TwistWithCovariance twist
+
+ROS srvs have near identical syntax to msgs, except for they contain both
+requests and responses. The requests are displayed FIRST, then three dashes are
+used to separate the requests and responses, and then RESPONSES ARE DISPLAYED.
+
+Example with 2 ints as the request and 1 int as the response:
+
+int64 A
+int64 B
+---
+int64 Sum
+
+Now that we have covered the syntax and definition of messages and services, let
+us define a new msg in our beginner_tutorials package.
+
+1) Navigate to the beginner_tutorials directory. Make a new directory in this
+   package called 'msg', then navigate to the newly made directory. In here,
+   make an example message file called 'Num.msg'. In this file, we will store
+   only one line of code: "int64 num".
+
+2) To ensure that the msg files can be turned into source code, we must edit the
+   CMakeLists.txt file inside the package. There will be a line in it with:
+   # rosbuild_genmsg(), where the hash represents a comment.
+   Uncomment this line.
+
+3) Now we have made our basic message, let us ensure it can be seen by ROS via
+   using the rosmsg command. 
+   Using the syntax: rosmsg show [message_file],
+   navigate into beginner_tutorials and type 'rosmsg show Num'.
+
+4) Leading on from making message files, let us now make a service file. Rather
+   than make one from scratch, we shall be copying one from another package.
+   First of all, we will make a srv directory inside beginner_tutorials.
+
+5) Using the roscp command, we will copy the AddTwoInts service from 
+   rospy_tutorials into our newly made directory. Before copying, navigate into
+   the srv. Using the syntax 'roscp [pkgName] [fileToCopy] [copyPath]', we will
+   use the following command:
+   'roscp roscpp_tutorials TwoInts.srv TwoInts.srv'
+
+6) Much like how we had to go into the CMakelists.txt to uncomment the genmsg,
+   we will now do the same for rosbuild_gensrv().
+
+7) Let us guarantee that ROS can see our newly made service.
+   'rossrv show beginner_tutorials/AddTwoInts'.
+
+8) So that our changes to the package, namely making a new service and message,
+   we will need to call 'rosmake beginner_tutorials'. This will make ROS aware
+   of our new additions and possible changes to other files i.e. CMakeLists.txt.
+
+   Note: When doing step 8, a Python not found error will occur. In the same
+   directory as this guide I have given an explanation of how to solve it.

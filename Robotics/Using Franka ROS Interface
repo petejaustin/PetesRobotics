@@ -1,0 +1,48 @@
+setting up Panda arm for real time scripting rather than running a pre-made
+script:
+
+DEPENDENCIES:
+pip3 install panda-robot
+pip3 install future
+
+Note: installing panda-robot will throw up some warnings about the PATH, saying
+they need to be added to it. This is not the case and they can be safely 
+ignored.
+
+1) Run Simulator using roslaunch panda_gazebo panda_world.launch
+
+2) Navigate to the workspace directory in another terminal and type python3
+
+3) import rospy
+   from panda_robot import PandaArm
+   rospy.init_node("panda_sim")
+   p = PandaArm()
+   
+From here, we should now be able to use functions tied to our newly named
+PandaArm p. The API website for the Franka ROS Interface is:
+https://projects.saifsidhik.page/franka_ros_interface/DOC.html
+
+Link to Panda Robot Python package API:
+https://projects.saifsidhik.page/panda_robot/
+
+Some notable examples:
+
+p.move_to_neutral(): moves the arm to a neutral position
+
+p.move_to_joint_position(joint1, joint2, joint3, joint4, joint5, joint6, joint7)
+this will move the PandaArm to a certain joint. The joint names, which can be 
+found out using the function p.joint_names, are as follows:
+panda_joint1, panda_joint2, ... , panda_joint7.
+
+p.joint_angles(): return the angles of all 7 joints in Radians.
+
+pos, ori = p.ee_pose(): Get the current end-effector (gripper) pose. Saves
+x, y, z co-ordinates into pos, and a quaternion defined as x, y, z, w. Saving
+ori like this means we can feed it into anywhere it is required so the 
+orientation does not get changed.
+
+exit(): exits the python scripting interface
+
+All of this line-by-line scripting can be collected into a singular .py file
+and ran, however this type of interpreted interaction makes it much easier to
+work with others at the same time.

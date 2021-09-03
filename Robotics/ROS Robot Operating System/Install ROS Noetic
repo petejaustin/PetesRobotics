@@ -1,0 +1,23 @@
+Step by step guide on how to install ROS Noetic (can easily be manipulated to
+apply for any newer versions):
+
+1) Set up your computers to accept software from packages.ros.org.
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+2) Set up your keys.
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
+3) Ensure Debian package index is up to date. WITHOUT THIS IT WILL NOT WORK!
+sudo apt update
+
+4) Now we can finally install the ROS Noetic version! This full install will
+include everything we could possibly need.
+sudo apt install ros-noetic-desktop-full
+
+5) There is a script we must source in every Bash terminal we want to use ROS in.
+Of course this means we can just add the following script to our .bashrc file.
+source /opt/ros/noetic/setup.bash
+
+6) So that we can MAKE ROS WORKSPACES AND SANDBOXES, let us also download 
+rosinstall.
+sudo apt-get install python-rosinstall

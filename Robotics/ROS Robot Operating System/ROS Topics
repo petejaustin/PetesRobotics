@@ -1,0 +1,106 @@
+As mentioned briefly in the ROS Nodes tutorial, the nodes communicate with one
+another through Topics. 
+
+Setup: As with 'ROS Nodes', please open six different terminals. I shall 
+refer to them as T1, T2, T3, T4, T5, and T6 from here on in.
+
+1) Run roscore in T1. 
+   Run 'rosrun turtlesim turtlesim_node' in T2 to open the turtlesim.
+   Run 'rosrun turtlesim turtle_teleop_key' in T3. 
+   We can now move our little turtle robot using the arrow keys! :)
+   Left and right arrows rotate our little guy, and up and down move him forward
+   or in reverse.
+   If for some reason you lose the ability to control the bot, make sure you
+   click T3 to be at the front of your screen.
+
+   turtle_teleop_key node is PUBLISHING keystrokes to a ROS topic, and turtlesim
+   is SUBSCRIBED to that topic to receive the keystrokes.
+
+2) We can view what is going on between nodes and topics using the 'rqt_graph'
+   utility. As we installed the full ROS software package, this should have
+   came with it. If it hasn't install it with APT:
+   'sudo apt-get install ros-noetic-rqt'
+   'sudo apt-get install ros-noetic-rqt-common-plugins'.
+
+   Once installed, run 'rosrun rqt_graph rqt_graph' in T4. It will display a
+   small graph where the nodes are vertices, and the topic is an edge. Keep this
+   graph open, as we will be referring back to it later.
+
+3) In T5, let us actually use the 'rostopic' command to learn more about this
+   currently running ROS topic. 
+   'rostopic echo /turtle1/cmd_vel' will show us in terms of linear and angular
+   values what the command velocity is actually doing for every future keypress
+   we make. 
+
+   rostopic echo will actually also subscribe to the turtle1/cmd_vel topic too, 
+   which can be seen in the rqt_graph if we press the refresh button in the top 
+   left.
+
+4) To see a list of all topics that are currently subscribed to and that have
+   been published, we can use 'rostopic list'.
+   In T6, use this command to view such information. For a more verbose list, we
+   can use 'rostopic list -v'.
+
+5) The publisher of the /turtle1/cmd_vel topic turtle_teleop_key and the
+   subscriber turtlesim_node are able to talk through this topic conduit. Rather
+   than using the arrow keys, we can send more direct messages through by
+   interacting with the topic message type and the arguments we can feed into it.
+
+   In T6, use the syntax 'rostopic type [topic]' to find out what the message
+   type is.
+   'rostopic type /turtle1/cmd_vel' should return geometry_msgs/Twist.
+
+   To then further get information about the arguments of this message object,
+   we can use the command syntax 'rosmsg show messageType', in this situation:
+   'rosmsg show geometry_msgs/Twist'. Do this in T6 too.
+
+   This will give us information of the below nature:
+   geometry_msgs/Vector3 linear (float64 x, float64 y, float64 z)
+   geometry_msgs/Vector3 angular (float64 x, float64 y, float64 z).
+
+6) We can use 'rostopic pub' to PUBLISH new messages to the topic, that will be
+   read by all subscriber nodes. This takes the syntax:
+   'rostopic pub topic msg_type args'.
+
+   In T6, let us send a single message to turtlesim telling it to move with a
+   linear velocity of 6.0 and an angular velocity of 1.8.
+   'rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]' '.
+   Ensure that turtlesim is showing so we can see what impact we had!
+   This will make our little turtle move a quarter of a circle.
+
+7) We can achieve more with this than just sending one message however, and in
+   fact now we will aim to keep supplying the same command over and over at a 
+   rate of 1 command per 1Hz. We can achieve this with the '-r x' flag, which
+   goes at the END OF THE MESSAGE TYPE. The x here means how many Hz do we wait.
+   We also remove the '-1' just after the publish call so that IT DOESNT LIMIT
+   ITSELF TO ONE MESSAGE.
+
+   This command will now make the turtle continuously go in circles.
+
+   Command:
+   'rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]' '.
+
+	If we check the rqt_graph and refresh it, we will also see that it has been
+	updated to reflect this new message.
+
+NOTE FOR NEXT TUTORIAL: Ensure that turtlesim has been activated as it will be
+necessary. 
+
+To have the basic turtlesim running only TWO terminals are needed: roscore, and
+turtlesim.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

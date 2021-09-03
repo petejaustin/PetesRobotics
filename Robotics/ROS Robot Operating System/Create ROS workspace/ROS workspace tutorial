@@ -1,0 +1,41 @@
+This tutorial will show how we are able to both make a workspace, and a sandbox
+for our ROS packages. We shall be using the 'rosws' command to make these 
+workspaces, as you can imagine this stands for ROS Workspace.
+
+1) Navigate to a directory where you will want to make the workspace. I shall be
+using the home directory for this, like with most programs.
+
+2) Before creating the sandbox we must first create the workspace. We can make a
+new workspace that will EXTEND the packages installed in /opt/ros/versionName 
+with a command taking the format:
+'rosws init workspaceName /opt/ros/version'. You WILL need rosinstall to be able 
+to do this.
+
+As we are using Noetic, our version will be noetic. Let us give it the name 
+ROSworkspace:
+'rosws init ROSworkspace /opt/ros/noetic'.
+
+3) Navigate to our newly made workspace, ready to set up the sandbox in which we
+would be running all of our packages. 
+
+a) Make a new directory in this workspace called sandbox.
+b) Inside the ROSworkspace, use: 'rosws set sandbox'.
+
+4) It is now an incredibly common practice to change our .bashrc source command
+to match the setup.bash in this workspace, rather than inside the ROS opt 
+directory to stop us having to source it all the time.
+Replace the previous source command with this in the .bashrc:
+'source ~/ROSworkspace/setup.bash'.
+
+Note: This will create a YAML Load Warning every time we open a new Terminal, 
+and this can be easily fixed. This is because the .load function has become
+deprecated and replaced with .safe_load. 
+
+If we navigate to the setup.sh file inside our ROSworkspace, and check around 
+line 58-60 (pic is in the same folder as this tutorial), we will find the 
+offending function. 
+
+Simply change it, and this will fix it. This won't hurt functionality.
+
+To confirm our package is set, we can use 'echo $ROS_PACKAGE_PATH' and it should
+point to the sandbox directory in the ROS workspace.

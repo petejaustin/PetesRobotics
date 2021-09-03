@@ -1,0 +1,12 @@
+Building a ROS package you have made is far easier than creating it, or even
+any of the steps that we have done thus far with setting up ROS.
+
+1) Navigate to our sandbox using 'roscd' and 'cd sandbox'.
+
+2) Using the format 'rosmake packageName', we can build the package as well as 
+   the dependencies.
+
+3) Although outside of the scope of this tutorial, we can build several packages
+   at once using the format 'rosmake package1 package2 package3...'
+
+For this example, we shall be using rosmake on beginner_tutorials.

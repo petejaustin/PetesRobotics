@@ -1,0 +1,11 @@
+Using Move Group Python Interface:
+
+1) Open two Terminals
+
+1) In T1 launch the demo environment in RViz. This can be done with:
+   roslaunch panda_moveit_config demo.launch
+   
+2) In T2 navigate to the Python script you have generated for this environment
+
+3) Run the python script. If it was named HelloWorld.py, do:
+   python3 HelloWorld.py 

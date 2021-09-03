@@ -1,0 +1,23 @@
+This tutorial covers the absolute basics of opening a simulation in Gazebo, and
+is most likely one of the first experiences many people will have with it.
+
+1) Run gazebo with the 'gazebo' command in Terminal. Once you've seen the empty
+   world, feel free to close the program. To safely exit out of Gazebo, use the
+   'quit' option in the file menu on the ribbon.
+
+2) Let us actually load a 'world' this time. Using the terminal we ran and then
+   closed the empty world gazebo in, type the command: 
+   'gazebo worlds/pioneer2dx.world'. If this model is not already installed,
+   then gazebo will download it from the online model database.
+
+   World files can be located in the following directory:
+   '/usr/share.gazebo-xx/worlds', where xx is the version of Gazebo. For this
+   example, the version is 11. If we type 'ls /usr/share.gazebo-11/worlds', we
+   shall be given a list of all the worlds saved in this directory.
+
+3) The 'gazebo' command actually does two things: it runs 'gzserver', and then
+   'gzclient'. gzserver can be used INDEPENDENTLY OF ANY GUI. gzclient provides
+   this interface to the user, giving a visualisation of the simulation.
+
+   Have 2 terminals open, in T1 run 'gzserver', in T2 run 'gzclient'. This will
+   let you experiment with how we can open many clients to run on the same serv.

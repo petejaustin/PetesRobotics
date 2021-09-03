@@ -1,0 +1,31 @@
+This tutorial shows how we can write publisher and subscriber nodes using C++.
+In this very simple example, our publisher can be considered a TALKER node, and
+our subscriber can be considered a LISTENER node. As expected we shall be using
+our beginner_tutorials package to work on this.
+
+1) Copy and paste the 'listener.cpp' and 'talker.cpp' files from the tutorial
+   site, and save them BOTH in the src directory inside beginner_tutorials.
+   There is no real need to add many comments about the function calls in this
+   write up, as the code is already well commented.
+
+2) Open the CMakeLists.txt file inside the beginner_tutorials directory. At the
+   bottom, add the following two lines of code to invoke our subscriber and
+   publisher nodes:
+   rosbuild_add_executable(talker src/talker.cpp)
+   rosbuild_add_executable(listener src/listener.cpp)
+
+   Save the file once the changes have been made.
+
+3) This will now create two executable files from the cpp source code, that go
+   inside the bin directory. In the beginner_tutorials directory, run the 'make'
+   command.
+
+4) Let us now run our talker and listener to prove they work. For this, we will
+   need 3 terminals open.
+   i)   In T1, run roscore.
+   ii)  In T2, run 'rosrun beginner_tutorials talker' for C++. For Python files,
+        you must add the .py file extension at the end due to it being interped.
+   iii) In T3, run 'rosrun beginner_tutorials listener'.
+
+   When you are done, use ctrl-c to terminate the listener and talker (publisher
+   and subscriber) nodes.

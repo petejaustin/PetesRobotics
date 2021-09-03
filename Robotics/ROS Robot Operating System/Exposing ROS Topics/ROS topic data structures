@@ -1,0 +1,19 @@
+Finding out about the many ROS topics running and how to get their data:
+
+1) Run 'rostopic list' to list all the topics running
+
+2) To test what grabbing the data from one would print, run the syntax: 
+   'rostopic echo <topic found using rostopic list>'. This may run infinitely so
+   you'll have to stop the command with ctrl c
+
+3) To see what data type is used through msgs, we use the syntax
+   'rostopic type <topic>'. This will return the class of object returned.
+
+4) Now we have the name of the msg class, we can look further into the data
+   structure. 
+   'rosmsg show <message found>'.
+
+5) We now have everything we need to extract the data into proper structures.
+   In the same directory as this tutorial I have provided a diagram and a 
+   program that is designed to be used with Panda Simulator running that will
+   do this.

@@ -1,0 +1,89 @@
+This covers the installation of the Panda Simulator, created by justagist a.k.a
+Saif Sidhik. This will come with some pre-requisite installations before I 
+discuss installing anything, as well as any extra very simple dependencies that
+will need to be downloaded.
+
+You may need to refer to documentation for the following applications and
+packages to see results using this simulator:
+- ROS
+- libfranka
+- franka-ros
+
+Panda is the NAME OF THE ROBOTIC ARM. The software used to generate this
+simulator can be seen below.
+
+Pre-requisite applications:
+1) ROS
+
+Basic one-line dependencies that need no extra maintenance:
+1)  sudo apt install ros-distro-libfranka
+2)  sudo apt install ros-distro-franka-ros
+3)  sudo apt install ros-distro-panda-moveit-config
+4)  sudo apt install ros-distro-gazebo-ros-control
+5)  sudo apt install ros-distro-rospy-message-converter
+6)  sudo apt install ros-distro-effort-controllers
+7)  sudo apt install ros-distro-joint-state-controller
+8)  sudo apt install ros-distro-moveit
+9)  sudo apt install ros-distro-moveit-commander
+10) sudo apt install ros-distro-moveit-visual-tools
+
+Catkin and its dependencies:
+1) sudo apt install ros-distro-catkin
+2) sudo apt install python3-catkin-tools
+3) sudo apt install python3-osrf-pycommon
+
+Python3 dependencies via pip3:
+1) numpy
+2) numpy-quaternion==2020.5.11.13.33.35
+
+Now, we can get on to the actual installation of the Panda simulator.
+
+1) Make a workspace directory, and a src directory inside that. DO NOT MAKE THIS
+   WITH CATKIN, as a script will do that for us later. Just make it by hand.
+   
+   Navigate to the src directory using the terminal, and clone the correct
+   distro development version into here:
+   'git clone -b distro-devel https://github.com/justagist/panda_simulator'
+
+2) A lot of the shebangs of .py files as well as other assorted files in the
+   directories that have been cloned will lead to /env/bin/python, rather than
+   python3. Until this is fixed, ensure python3 is set as the package to use
+   over python with the script: 
+   
+   'sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.x 100'
+   
+   where x should be replaced with whatever version of Python 3 your machine is
+   using, and 100 is just a priority argument that must be set. 100 means it has
+   top priority and will be done asap.
+
+3) Navigate to the panda_simulator directory in Terminal once step 1 is done.
+   run the workspace builder script: './build_ws.sh'. When completing this step,
+   please ensure that as few apps as possible are running, PREFERABLY NONE. This
+   stage is very prone to crashing if you do not take this precaution.
+
+4) Inside the .bashrc file, put these two lines so that ROS sources correctly:
+   source /opt/ros/distro/setup.bash
+   source ~/workspaceName/devel/setup.bash
+
+This covers the installation of the Panda simulator, but now let us test it to
+make sure it works! To achieve this, open 3 terminals.
+
+1) In T1, boot up the simulator. This will also boot up roscore.
+   'roslaunch panda_gazebo panda_world.launch'
+
+2) In T2, boot up the moveit server.
+   'roslaunch panda_sim_moveit sim_move_group.launch
+
+3) In T3, we will actually load up the moveit demo. This will also affect what
+   is shown in Gazebo if we decide to execute any of our changes. 
+   'roslaunch panda_simulator_examples demo_moveit.launch'.
+
+4) Using the newly opened RViz GUI, we can move around the arm as we please,
+   using the plan command to see how this would move the arm in RViz, and
+   execute to commit our transformation to Gazebo. This execute will mean we can
+   watch the arm move in real time on Gazebo.
+
+5) Whenever you're bored, feel free to close RViz then terminate T3 (ctrl-c),
+   do the same to T2, and finally close the gzclient GUI and terminate T1.
+
+This now fully covers the demo completion! Enjoy working with the Panda sim :)

@@ -1,0 +1,49 @@
+This tutorial covers the idea of ROS nodes, and how to use them. These ROS nodes
+are placed in what we call a ROS graph, and come with their own set of graph
+concepts, which I shall detail below:
+
+Nodes: Executable files inside ROS packages. Nodes use ROS to communicate with
+       other nodes.
+
+Messages: A ROS data type that is used to Subscribe or Publish to a topic.
+
+Topics: Nodes can PUBLISH messages to a topic, and SUBSCRIBE to a topic in order
+        to RECEIVE messages.
+
+Master: Name service for ROS, helping nodes find each other.
+
+rosout: ROS equivalent for STDOUT
+
+roscore: Master + rosout + parameter server (parameter server covered later).
+
+So, what can we actually do with these ROS nodes?
+They can use a ROS client library to communicate with other nodes, and they can
+also publish/subscribe to topics. Nodes can also provide or use services.
+We have seen client libraries before, namely: roscpp and rospy.
+
+1) The first thing we must always do when wanting to use ROS is to initialise
+   roscore. Do this by using the command 'roscore'.
+
+2) While we have ran roscore in one terminal, keep this terminal open. Now also
+   open a new one, and in this new terminal we can run the command 'rosnode 
+   list'. So far, this should just show /rosout as this node always runs once
+   roscore is initialised.
+
+3) In the new terminal, let us actually run some proper nodes within the ROS
+   packages. We can run these using the syntax 'rosrun pkgName nodeName'.
+   In this example, we shall run the turtlesim_node in the turtlesim package.
+   'rosrun turtlesim turtlesim_node'.
+   
+   Open yet again another terminal, so we will now have 3 open: One running
+   roscore, one running turtlesim, and one fresh doing nothing. Run 'rosnode
+   list' on the fresh terminal to ensure that the turtlesim and rosout nodes
+   appear on this display.
+
+4) We can now close the window that should be running turtlesim, and re-run it
+   with REMAPPING ITS NAME to something more meaningful than /turtlesim.
+   'rosrun pkgName nodeName __name:=newName'.
+   Here we will rename it my_turtle, making the command:
+   'rosrun turtlesim turtlesim_node __name:=my_turtle'.
+   Calling 'rosnode list' this time should show us /my_turtle along with 
+   /rosout.
+

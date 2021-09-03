@@ -1,0 +1,22 @@
+This mini-guide is to help TROUBLESHOOT the problem that comes from /usr/bin/env
+not being able to find Python3. This is because the she-bang for a certain file
+is saying python rather than python3, something that the ROS devs need to
+change. I have also provided pictures which detail what the exact errors shown
+are.
+
+1) For all of these particular build files, it will be referencing the /build
+   directory inside of our ROS package. First off, we are told there is no such
+   directory as 'python'. We are also given a directory of:
+   [CMakeFiles/ROSBUILD_genmsg_lisp.dir/build.make:90], which means LINE 90 OF
+   beginner_tutorials/build/CMakeFiles/ROSBUILD_genmsg_list.dir/build.make
+
+2) Open this build.make file, and check line 90. We are now given a link to yet
+   another directory path, which in this case is:
+   '/opt/ros/noetic/share/roslisp/rosbuild/scripts/genmsg_lisp.py', and this is
+   indeed where we need to go next.
+
+3) Using the terminal, navigate to the above directory. Open the genmsg_lisp.py
+   file with SUDO vim, as regular permissions are set to read-only. Change the
+   shebang from python to python3, then save your changes.
+
+This error will be fully fixed now :)

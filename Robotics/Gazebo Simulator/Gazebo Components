@@ -1,0 +1,39 @@
+This tutorial will describe different components that are used during a typical
+Gazebo simulation.
+
+WORLD FILES: These contain all elements inside a simulation, such as: robots, 
+lights, sensors, and other static objects. This is formatted using SDF 
+(simulation description format), and will have a .world extenstion. The Gazebo 
+server a.k.a gzserver reads .world files in to generate and populate the world.
+
+MODEL FILES: These use the same SDF format as .world files, however they will
+only contain a SINGLE <model>...</model> object. This allows for model reuse,
+and of course aids in modularising and simplifying .world files. Once a model
+has been created, it is included inside the world file using the following
+syntax:
+
+<include>
+	<uri>model://model_file_name</uri>
+</include>
+
+Note: URI stands for Uniform Resource Identifier.
+
+ENVIRONMENT VARIABLES: Gazebo uses Environment Variables to locate files as well
+as set up communications between a server and the client(s). Here are the vars
+that are used:
+
+GAZEBO_MODEL_PATH: A colon separated set of directories in which Gazebo will
+search for models.
+
+GAZEBO_RESOURCE_PATH: A colon separated set of directories where Gazebo searches
+for worlds, as well as other media files.
+
+GAZEBO_MASTER_URI: The URI of the Gazebo master. This specifies the SOCKET (the
+IP and Port) of where the server will be started, and where clients may connect
+to.
+
+GAZEBO_PLUGIN_PATH: A colon separated set of directories where Gazebo searches
+for plugin shared libraries at run-time.
+
+GAZEBO_MODEL_DATABASE_URI: URI of the online model database where Gazebo 
+downloads models from.

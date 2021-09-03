@@ -1,0 +1,13 @@
+In order for us to use most of the ROS tools available to us, we must first 
+both INSTALL and INITIALISE rosdep. This rosdep package allows us to install
+system dependencies for source we want to compile, as well as being VITAL TO RUN
+SOME CORE COMPONENTS IN ROS.
+
+Note: Install ROS before installing rosdep.
+
+1) Install: sudo apt-get install python3-rosdep
+WARNING: DO NOT TAKE UBUNTU'S ADVICE OF DOWNLOADING rosdep2 instead. 
+This will delete everything you have installed already!!!
+
+2) Initialise: sudo rosdep init
+               rosdep update
