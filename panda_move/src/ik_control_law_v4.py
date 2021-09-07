@@ -272,7 +272,7 @@ def movJoint(Kd):
 
             rospy.sleep(1)
 
-            while (j<10):
+            while (j<3):
 
                 Curr[2] += 0.001
 
@@ -312,9 +312,26 @@ def movJoint(Kd):
                 rospy.sleep(0.01)
                 j += 1
 
-            return Xc
+                tqDict = p.joint_efforts()
+                tq1.append(tqDict['panda_joint1'])
+                tq2.append(tqDict['panda_joint2'])
+                tq3.append(tqDict['panda_joint3'])
+                tq4.append(tqDict['panda_joint4'])
+                tq5.append(tqDict['panda_joint5'])
+                tq6.append(tqDict['panda_joint6'])
+                tq7.append(tqDict['panda_joint7'])
+                iVec.append(i+j)
+                forcexlist.append(forceVals.x)
+                forceylist.append(forceVals.y)
+                forcezlist.append(forceVals.z)
+                Xcx.append(Xc[0])
+                Xcy.append(Xc[1])
+                Xcz.append(Xc[2])
+                Xvx.append(Xv[0])
+                Xvy.append(Xv[1])
+                Xvz.append(Xv[2])
 
-
+            return Xc, i+j
 
         # Large block of appending to global vectors for graph visualisation
         tqDict = p.joint_efforts()
@@ -354,9 +371,12 @@ def movJoint(Kd):
         i+=1
 
 # SYNTAX: movJoint(Kd stiffness)
-xc_vals = movJoint(2000000)
+xc_vals, newTimestep = movJoint(2000000)
 
-def arch_spiral(old_Xc, Kd):
+def arch_spiral(old_Xc, Kd, timestep):
+
+    global tq1, tq2, tq3, tq4, tq5, tq6, tq7, iVec, forceVals
+    global forcexlist, forceylist, forcezlist, Xcx, Xcy, Xcz, Xvx, Xvy, Xvz
 
     Curr = old_Xc
     angles = p.joint_angles()
@@ -396,6 +416,25 @@ def arch_spiral(old_Xc, Kd):
 	                                                 [0,-1,0],
 												     [0,0,-1]]), Xc)
 
+        tqDict = p.joint_efforts()
+        tq1.append(tqDict['panda_joint1'])
+        tq2.append(tqDict['panda_joint2'])
+        tq3.append(tqDict['panda_joint3'])
+        tq4.append(tqDict['panda_joint4'])
+        tq5.append(tqDict['panda_joint5'])
+        tq6.append(tqDict['panda_joint6'])
+        tq7.append(tqDict['panda_joint7'])
+        iVec.append(timestep+(i+1))
+        forcexlist.append(forceVals.x)
+        forceylist.append(forceVals.y)
+        forcezlist.append(forceVals.z)
+        Xcx.append(Xc[0])
+        Xcy.append(Xc[1])
+        Xcz.append(Xc[2])
+        Xvx.append(Xv[0])
+        Xvy.append(Xv[1])
+        Xvz.append(Xv[2])
+
         angles['panda_joint1'] = destJointVals[0]
         angles['panda_joint2'] = destJointVals[1]
         angles['panda_joint3'] = destJointVals[2]
@@ -409,7 +448,7 @@ def arch_spiral(old_Xc, Kd):
         rospy.sleep(0.01)
         i += 1
 
-arch_spiral(xc_vals, 2000000)
+arch_spiral(xc_vals, 2000000, newTimestep)
 
 fig, ax = plt.subplots()
 ax.plot(iVec, tq1, label='joint 1')
